@@ -1,0 +1,3 @@
+query CharacterList($page: Int!) {
+  __typename
+}
