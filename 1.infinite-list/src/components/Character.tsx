@@ -11,7 +11,7 @@ export function Character({
 }) {
   return (
     <div className="flex gap-4 items-center">
-      <div>{id}</div>
+      <div className="w-4">{id}</div>
       <div className="w-[100px] aspect-square">
         {imageSrc && (
           <Image

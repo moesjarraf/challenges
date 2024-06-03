@@ -1,3 +1,10 @@
 query CharacterList($page: Int!) {
   __typename
+  characters(page: $page) {
+    results {
+      id
+      name
+      image
+    }
+  }
 }
