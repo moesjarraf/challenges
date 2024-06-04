@@ -14,6 +14,7 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  /** The `Upload` scalar type represents a file upload. */
   Upload: { input: any; output: any; }
 };
 
@@ -202,6 +203,13 @@ export type QueryLocationsByIdsArgs = {
   ids: Array<Scalars['ID']['input']>;
 };
 
+export type CharacterListQueryVariables = Exact<{
+  page: Scalars['Int']['input'];
+}>;
+
+
+export type CharacterListQuery = { __typename: 'Query', characters?: { __typename?: 'Characters', results?: Array<{ __typename?: 'Character', id?: string | null, name?: string | null, image?: string | null } | null> | null } | null };
+
 export type GetCharacterQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
@@ -210,6 +218,18 @@ export type GetCharacterQueryVariables = Exact<{
 export type GetCharacterQuery = { __typename?: 'Query', character?: { __typename?: 'Character', id?: string | null, name?: string | null, image?: string | null, status?: string | null, species?: string | null, type?: string | null } | null };
 
 
+export const CharacterListDocument = gql`
+    query CharacterList($page: Int!) {
+  __typename
+  characters(page: $page) {
+    results {
+      id
+      name
+      image
+    }
+  }
+}
+    `;
 export const GetCharacterDocument = gql`
     query GetCharacter($id: ID!) {
   character(id: $id) {
@@ -225,6 +245,9 @@ export const GetCharacterDocument = gql`
 export type Requester<C = {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R> | AsyncIterable<R>
 export function getSdk<C>(requester: Requester<C>) {
   return {
+    CharacterList(variables: CharacterListQueryVariables, options?: C): Promise<CharacterListQuery> {
+      return requester<CharacterListQuery, CharacterListQueryVariables>(CharacterListDocument, variables, options) as Promise<CharacterListQuery>;
+    },
     GetCharacter(variables: GetCharacterQueryVariables, options?: C): Promise<GetCharacterQuery> {
       return requester<GetCharacterQuery, GetCharacterQueryVariables>(GetCharacterDocument, variables, options) as Promise<GetCharacterQuery>;
     }
