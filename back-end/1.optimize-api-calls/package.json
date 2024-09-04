@@ -1,0 +1,27 @@
+{
+  "name": "1.optimize-api-calls",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "ts-node src",
+    "lint": "eslint .",
+    "graphql:schema": "get-graphql-schema https://rickandmortyapi.com/graphql -> schema.graphql",
+    "graphql:generate": "graphql-codegen -c './.graphqlrc.yaml' src/graphql/generated.ts"
+  },
+  "dependencies": {
+    "@eslint/js": "^9.9.1",
+    "@graphql-codegen/cli": "^5.0.2",
+    "@graphql-codegen/typescript": "^4.0.6",
+    "@graphql-codegen/typescript-generic-sdk": "^4.0.1",
+    "@graphql-codegen/typescript-operations": "^4.2.0",
+    "@types/eslint__js": "^8.42.3",
+    "@types/graphql": "^14.5.0",
+    "@types/node": "20.12.12",
+    "eslint": "^8.57.0",
+    "get-graphql-schema": "^2.1.2",
+    "graphql": "^16.9.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4",
+    "typescript-eslint": "^8.4.0"
+  }
+}
