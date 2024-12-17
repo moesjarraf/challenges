@@ -1,8 +1,13 @@
-query CharacterList($page: Int!) {
+query CharacterList($page: Int!, $gender: String) {
   __typename
-  characters(page: $page) {
+  characters(page: $page, filter: { gender: $gender }) {
+    info {
+      ...ListInfo
+    }
     results {
       id
+      name
+      gender
     }
   }
 }

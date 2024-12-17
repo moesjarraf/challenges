@@ -1,0 +1,6 @@
+fragment ListInfo on Info {
+  count
+  pages
+  next
+  prev
+}

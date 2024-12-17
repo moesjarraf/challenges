@@ -1,8 +1,0 @@
-query Character($id: ID!) {
-  __typename
-  character(id: $id) {
-    id
-    name
-    gender
-  }
-}

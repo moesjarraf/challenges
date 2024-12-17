@@ -6,7 +6,7 @@
     "start": "ts-node src",
     "lint": "eslint .",
     "graphql:schema": "get-graphql-schema https://rickandmortyapi.com/graphql -> schema.graphql",
-    "graphql:generate": "graphql-codegen -c './.graphqlrc.yaml' src/graphql/generated.ts"
+    "graphql:generate": "graphql-codegen -c ./.graphqlrc.yaml src/graphql/generated.ts"
   },
   "dependencies": {
     "@eslint/js": "^9.9.1",

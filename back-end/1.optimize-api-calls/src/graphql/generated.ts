@@ -203,47 +203,42 @@ export type QueryLocationsByIdsArgs = {
   ids: Array<Scalars['ID']['input']>;
 };
 
-export type CharacterQueryVariables = Exact<{
-  id: Scalars['ID']['input'];
-}>;
-
-
-export type CharacterQuery = { __typename: 'Query', character?: { __typename?: 'Character', id?: string | null, name?: string | null, gender?: string | null } | null };
-
 export type CharacterListQueryVariables = Exact<{
   page: Scalars['Int']['input'];
+  gender?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type CharacterListQuery = { __typename: 'Query', characters?: { __typename?: 'Characters', results?: Array<{ __typename?: 'Character', id?: string | null } | null> | null } | null };
+export type CharacterListQuery = { __typename: 'Query', characters?: { __typename?: 'Characters', info?: { __typename?: 'Info', count?: number | null, pages?: number | null, next?: number | null, prev?: number | null } | null, results?: Array<{ __typename?: 'Character', id?: string | null, name?: string | null, gender?: string | null } | null> | null } | null };
 
+export type ListInfoFragment = { __typename?: 'Info', count?: number | null, pages?: number | null, next?: number | null, prev?: number | null };
 
-export const CharacterDocument = gql`
-    query Character($id: ID!) {
-  __typename
-  character(id: $id) {
-    id
-    name
-    gender
-  }
+export const ListInfoFragmentDoc = gql`
+    fragment ListInfo on Info {
+  count
+  pages
+  next
+  prev
 }
     `;
 export const CharacterListDocument = gql`
-    query CharacterList($page: Int!) {
+    query CharacterList($page: Int!, $gender: String) {
   __typename
-  characters(page: $page) {
+  characters(page: $page, filter: {gender: $gender}) {
+    info {
+      ...ListInfo
+    }
     results {
       id
+      name
+      gender
     }
   }
 }
-    `;
+    ${ListInfoFragmentDoc}`;
 export type Requester<C = {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R> | AsyncIterable<R>
 export function getSdk<C>(requester: Requester<C>) {
   return {
-    Character(variables: CharacterQueryVariables, options?: C): Promise<CharacterQuery> {
-      return requester<CharacterQuery, CharacterQueryVariables>(CharacterDocument, variables, options) as Promise<CharacterQuery>;
-    },
     CharacterList(variables: CharacterListQueryVariables, options?: C): Promise<CharacterListQuery> {
       return requester<CharacterListQuery, CharacterListQueryVariables>(CharacterListDocument, variables, options) as Promise<CharacterListQuery>;
     }
